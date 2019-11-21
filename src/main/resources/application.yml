@@ -1,0 +1,61 @@
+server:
+  port: 8079    #default port where the service will be started
+
+eureka:         #tells about the Eureka server details and its refresh time
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
+#
+#zuul:
+#  #Service will be mapped under the /api URI
+##  prefix: /api
+#  #  Uncomment to disable auto-registering all services read from Eureka
+#  #  ignoredServices: '*'
+#  routes:
+#      customer-service: /customer/**
+#      serviceId: CUSTOMER_SERVICE1
+#    order:
+#      path: /order/**
+#      serviceId: ORDER_SERVICE1
+
+zuul:
+  #Service will be mapped under the /api URI
+  prefix: /api
+  routes:
+    customer-service1:
+      path: /customer/**
+      serviceId: CUSTOMER-SERVICE1
+
+spring:
+  application:
+    name: api-gateway   #current service name to be used by the eureka server
+
+management:
+  security:
+    enabled: false  #disable the spring security on the management endpoints like /env, /refresh etc.
+
+logging:
+  level:
+    com.example.howtodoinjava: DEBUG
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 60000
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+  eureka:
+    enabled: true
