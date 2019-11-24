@@ -29,9 +29,13 @@ zuul:
   #Service will be mapped under the /api URI
   prefix: /api
   routes:
-    customer-service1:
-      path: /customer/**
+    customer:
+      path: /**
       serviceId: CUSTOMER-SERVICE1
+
+    order:
+      path: /**
+      serviceId: ORDER-SERVICE1
 
 spring:
   application:
